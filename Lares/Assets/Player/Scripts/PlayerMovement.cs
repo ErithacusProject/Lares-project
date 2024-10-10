@@ -16,7 +16,6 @@ namespace Lares
         [SerializeField] private float jumpForce;
         [SerializeField] private float rotationSpeed;
 
-
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -34,13 +33,8 @@ namespace Lares
         void MoveStart(InputAction.CallbackContext context)
         {
             Vector2 movementInput = context.ReadValue<Vector2>();
-
             moveDirection = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
-
-            moveDirection = new Vector3(movementInput.x, 0f, movementInput.y);
-
             if (_moveCoroutine == null) { StartCoroutine(Move()); }
-
         }
 
         void MoveEnd(InputAction.CallbackContext context)
@@ -55,8 +49,9 @@ namespace Lares
 
             while (moveDirection != Vector3.zero)
             {
-                _rigidbody.MovePosition(transform.position + (moveDirection * movementForce) * Time.fixedDeltaTime);
-                Quaternion targetRot = cameraLook.transform.rotation * Quaternion.LookRotation(moveDirection, Vector3.up);
+                Vector3 desiredDirection = Vector3.Normalize(new Vector3(cameraLook.transform.forward.x, cameraLook.transform.position.y, cameraLook.transform.forward.z));
+                _rigidbody.MovePosition(desiredDirection + (moveDirection * movementForce) * Time.fixedDeltaTime);
+                Quaternion targetRot =  Quaternion.LookRotation(desiredDirection, Vector3.up);
                 model.transform.rotation = Quaternion.Slerp(model.transform.rotation, targetRot, rotationSpeed);
 
                 yield return new WaitForFixedUpdate();
