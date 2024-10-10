@@ -6,15 +6,15 @@ namespace Lares
 {
     public class PlayerMovement : MonoBehaviour
     {
-        PlayerInput _input;
-        Vector3 moveDirection;
-        Rigidbody _rigidbody;
-        Coroutine _moveCoroutine;
-        int _jumpNo = 0;
-        [SerializeField] float movementForce;
-        [SerializeField] float maxSpeed;
-        [SerializeField] float jumpForce;
-        [SerializeField] float rotationSpeed;
+        private PlayerInput _input;
+        private Vector3 moveDirection;
+        private Rigidbody _rigidbody;
+        private Coroutine _moveCoroutine;
+        private int _jumpNo = 0;
+        [SerializeField] private float movementForce;
+        [SerializeField] private float maxSpeed;
+        [SerializeField] private float jumpForce;
+        [SerializeField] private float rotationSpeed;
 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
